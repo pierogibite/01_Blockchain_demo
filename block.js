@@ -1,3 +1,6 @@
+const SHA256 = require("crypto-js/sha256");
+ 
+
 class Block
 {
     constructor(timestamp, lastHash, hash, data)
@@ -23,11 +26,15 @@ class Block
         
         const timestamp = Date.now(); // Zeit im ms seit 01.01.1970 | UNIX
         const lastHash  = lastBlock.hash; // HASH-Wert des Vorgängers
-        const hash      = "Hash:to Do"
+        const hash      = Block.hash(timestamp, lastHash, blockData);
 
         return new this(timestamp, lastHash, hash, blockData); // call constructor
 
     }
+    static hash(timestamp,lastHash,data){
+        return SHA256(`${timestamp}${lastHash}${data}`).toString();
+    }
+
 
 
 }
